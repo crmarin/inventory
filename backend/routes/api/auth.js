@@ -1,26 +1,27 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
-const authController = require("../../controllers/authController");
+import authController from '../../controllers/authController.js';
+import auth from '../../middleware/auth.js';
 
 /**
  * @route	GET api/auth/test
  * @desc	Test auth route
  * @access	Public
  */
-router.get("/test", (req, res) => res.json({ msg: "Auth Works" }));
+router.get('/test', (req, res) => res.json({ msg: 'Auth Works' }));
 
-/**
- * @route	GET api/auth/
- * @desc	Get user by token
- * @access	Private
- */
-router.get("/", authController.current);
+// /**
+//  * @route	GET api/auth/
+//  * @desc	Get user by token
+//  * @access	Private
+//  */
+router.get('/', auth, authController.current);
 
-/**
- * @route   POST api/auth/login
- * @desc    Authenticate user & get token
- * @access  Public
- */
-router.post("/login", authController.login);
+// /**
+//  * @route   POST api/auth/login
+//  * @desc    Authenticate user & get token
+//  * @access  Public
+//  */
+router.post('/login', authController.login);
 
-module.exports = router;
+export default router;

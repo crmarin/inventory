@@ -1,19 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { userStore } from '@/store/userStore';
 import { shallow } from 'zustand/shallow';
 
-import Admin from '@/layouts/Admin';
 import Auth from '@/layouts/Auth';
 import setAuthToken from './utils/setAuthToken';
 
 import Login from '@/views/auth/Login';
-import Todo from '@/views/admin/Todo';
+import Register from '@/views/auth/Register';
+
+import Index from '@/views/user/Index';
+import Product from '@/views/user/Product';
+import Cart from './views/user/Cart';
 
 function App() {
-  const { token: isAuthenticated } = userStore(
+  const { loadUser, token: isAuthenticated } = userStore(
     (state) => ({
+      loadUser: state.loadUser,
       token: state.token,
     }),
     shallow
@@ -28,44 +32,50 @@ function App() {
   useEffect(() => {
     if (isRunned.current) return;
     isRunned.current = true;
-
-  }, [isAuthenticated]);
+    if (isAuthenticated) loadUser();
+  }, []);
 
   return (
     <Routes>
-      <>
-        <Route path="admin" element={<Admin />}>
+      {/* <>
+        <Route path="products" element={<User />}>
           <Route
-            path="todo"
+            path="/products"
             element={
               <ProtectedRoute>
-                <Todo />
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="product/:id"
+            element={
+              <ProtectedRoute>
+                <Product />
               </ProtectedRoute>
             }
           />
         </Route>
-      </>
+      </> */}
       <Route path="auth" element={<Auth />}>
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
-      <Route path="*" element={<MissingRoute />} />
+      <Route path="*" element={<Index />} />
+      <Route path="/product/:id" element={<Product />} />
+      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 }
 
-const ProtectedRoute = ({ roles, children }) => {
+const ProtectedRoute = ({ children }) => {
   const token = userStore((state) => state.token);
-  const user = userStore((state) => state.user);
   const isAuthenticated = token;
 
   if (!isAuthenticated) {
-    return <Navigate to="/auth/login" replace />;
+    // return <Navigate to="products" replace />;
   }
   return children;
-};
-
-const MissingRoute = () => {
-  return <Navigate to={{ pathname: '/auth/login' }} />;
 };
 
 export default App;

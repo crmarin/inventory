@@ -1,40 +1,19 @@
-const express = require("express");
+import express from 'express';
 const router = express.Router();
-const usersController = require("../../controllers/usersController");
-
-/**
- * @route	GET api/users/lists
- * @desc	Get all users
- * @access	Private
- */
-router.get("/list", usersController.list);
+import usersController from '../../controllers/usersController.js';
 
 /**
  * @route	GET api/users/test
  * @desc	Test users route
  * @access	Public
  */
-router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
+router.get('/test', (req, res) => res.json({ msg: 'Users Works' }));
 
 /**
  * @route   POST api/users/
  * @desc    Register user
  * @access  Public
  */
-router.post("/", usersController.register);
+router.post('/', usersController.register);
 
-/**
- * @route   POST api/users/
- * @desc    Register user
- * @access  Public
- */
-router.post("/update", usersController.update);
-
-/**
- * @route	GET api/users/roles
- * @desc	Get all roles users
- * @access	Private
- */
-router.get("/roles", usersController.roles);
-
-module.exports = router;
+export default router;

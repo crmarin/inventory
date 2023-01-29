@@ -1,23 +1,22 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const routes = require('./routes/api');
-const auth = require('./middleware/auth');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-const connectDB = require('./config/db');
+import routes from './routes/api/index.js';
 
+import connectDB from './config/db.js';
 
-require('dotenv').config();
-
-const app = express();
+dotenv.config();
 
 connectDB();
+
+const app = express();
 
 app.use(cors());
 
 // Init Middleware
 app.use(express.json());
-app.use(auth);
 
 // Define Routes
 app.use('/', routes);

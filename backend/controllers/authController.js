@@ -1,85 +1,76 @@
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
+
 const AuthController = {};
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-
-AuthController.current = async (req, res) => {
-  try {
-    const user = await prisma.users.findFirst({
-      where: { id: req.user.id },
-      include: {
-        enterprises: true,
-      },
-    });
-
-    res.json(user);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send({ msg: 'Server error', err: err.message });
-  }
-};
-
+// @desc    Auth user & get token
+// @route   POST /api/users/login
+// @access  Public
 AuthController.login = async (req, res) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors.array());
-  }
-
   const { email, password } = req.body;
 
-  try {
-    let user = await prisma.users.findUnique({
-      include: {
-        enterprises: true,
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res
+      .status(400)
+      .json([{ param: 'email', msg: 'Credenciales o correo inválido' }]);
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res.status(400).json([
+      {
+        param: 'password',
+        msg: 'Contraseña incorrecta, intente de nuevo',
       },
-      where: { email: email },
+    ]);
+  }
+
+  const payload = {
+    user: {
+      _id: user._id,
+    },
+  };
+
+  jwt.sign(
+    payload,
+    process.env.JWT_SECRET,
+    { expiresIn: '5 days' },
+    (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    }
+  );
+  // res.json({
+  //   _id: user._id,
+  //   name: user.name,
+  //   email: user.email,
+  //   isAdmin: user.isAdmin,
+  //   token: generateToken(user._id),
+  // })
+};
+
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
+AuthController.current = async (req, res) => {
+
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
     });
-
-    if (!user) {
-      return res
-        .status(400)
-        .json([{ param: 'email', msg: 'Credenciales o correo inválido' }]);
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res
-        .status(400)
-        .json([
-          { param: 'password', msg: 'Contraseña incorrecta, intente de nuevo' },
-        ]);
-    }
-
-    const payload = {
-      user: {
-        id: user.id,
-        names: `${user.names}`,
-        last_names: `${user.last_names}`,
-        email: user.email,
-        enterpriseId: user.enterpriseId,
-        enterpriseName: user.enterprises.name_enterprise,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      config.get('jwtSecret'),
-      { expiresIn: '5 days' },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send({ msg: 'Server error', err: err.message });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
   }
 };
 
-module.exports = AuthController;
+export default AuthController;
