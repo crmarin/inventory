@@ -3,9 +3,8 @@ import path from 'path';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import routes from './routes/api/index.js';
-
 import connectDB from './config/db.js';
+import routes from './routes/api/index.js';
 
 dotenv.config();
 

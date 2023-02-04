@@ -1,16 +1,8 @@
 import mongoose from 'mongoose';
 
-const productSchema = mongoose.Schema(
+const articleSchema = mongoose.Schema(
   {
     name: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
-    category: {
       type: String,
       required: true,
     },
@@ -28,12 +20,16 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    clientId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Company',
+    },
   },
   {
     timestamps: false,
   }
 );
 
-const Product = mongoose.model('Product', productSchema);
+const Article = mongoose.model('Article', articleSchema);
 
-export default Product;
+export default Article;

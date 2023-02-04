@@ -1,15 +1,15 @@
 import express from 'express';
 
-import users from './users.js';
 import auth from './auth.js';
-import order from './order.js';
-import products from './products.js';
+import users from './users.js';
+import company from './company.js';
+import articles from './articles.js';
 
 const app = express();
 
-app.use('/api/users', users);
 app.use('/api/auth', auth);
-app.use('/api/order', order);
-app.use('/api/products', products);
+app.use('/api/users', users);
+app.use('/api/companies', company);
+app.use('/api/articles', articles);
 
 export default app;

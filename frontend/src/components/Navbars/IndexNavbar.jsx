@@ -3,21 +3,17 @@ import { Link } from 'react-router-dom';
 
 import { userStore } from '@/store/userStore';
 import { shallow } from 'zustand/shallow';
-import { productsStore } from '@/store/productsStore';
 
 export default function Navbar(props) {
-  const logout = userStore((state) => state.logout);
-
-  const { cart } = productsStore(
+  const {
+    user,
+    token: isAuthenticated,
+    logout,
+  } = userStore(
     (state) => ({
-      cart: state.cart,
-    }),
-    shallow
-  );
-
-  const { token: isAuthenticated } = userStore(
-    (state) => ({
+      user: state.user,
       token: state.token,
+      logout: state.logout,
     }),
     shallow
   );
@@ -32,33 +28,32 @@ export default function Navbar(props) {
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-end">
           <div className="w-full relative flex justify-end lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              to="/"
-              className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              to="/home"
+              className="text-gray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
             >
-              Productos
+              Home
             </Link>
-          </div>
-          <div className="w-full relative flex justify-end lg:w-auto lg:static lg:block lg:justify-start">
             <Link
-              to="/cart"
-              className="text-blueGray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
+              to="/companies"
+              className="text-gray-700 text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
             >
-              Carrito ({cart.length})
+              Companies
             </Link>
           </div>
+
           <div className="w-full relative flex justify-end lg:w-auto lg:static lg:block lg:justify-start">
             {isAuthenticated ? (
               <a
                 onClick={() => onLogoutClick()}
                 href="#!"
-                className="text-red-500 hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
+                className="text-red-500 hover:text-gray-500 text-sm uppercase py-3 font-bold block"
               >
                 Logout
               </a>
             ) : (
               <Link
                 to="auth/login"
-                className="text-red-500 hover:text-blueGray-500 text-sm uppercase py-3 font-bold block"
+                className="text-red-500 hover:text-gray-500 text-sm uppercase py-3 font-bold block"
               >
                 login
               </Link>

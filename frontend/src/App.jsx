@@ -5,14 +5,16 @@ import { userStore } from '@/store/userStore';
 import { shallow } from 'zustand/shallow';
 
 import Auth from '@/layouts/Auth';
+import Admin from '@/layouts/Admin';
 import setAuthToken from './utils/setAuthToken';
 
 import Login from '@/views/auth/Login';
 import Register from '@/views/auth/Register';
 
-import Index from '@/views/user/Index';
-import Product from '@/views/user/Product';
-import Cart from './views/user/Cart';
+import Companies from '@/views/admin/Companies';
+import Articles from '@/views/admin/Articles';
+import Index from './views/Index';
+import Page404 from './views/auth/Page404';
 
 function App() {
   const { loadUser, token: isAuthenticated } = userStore(
@@ -37,43 +39,45 @@ function App() {
 
   return (
     <Routes>
-      {/* <>
-        <Route path="products" element={<User />}>
+      <Route path="/" element={<Admin />}>
+        {isAuthenticated && (
           <Route
-            path="/products"
+            path="companies/:id"
             element={
               <ProtectedRoute>
-                <Index />
+                <Articles />
               </ProtectedRoute>
             }
           />
-          <Route
-            path="product/:id"
-            element={
-              <ProtectedRoute>
-                <Product />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-      </> */}
+        )}
+        <Route path="companies" element={<Companies />} />
+        <Route path="" element={<Index />} />
+      </Route>
       <Route path="auth" element={<Auth />}>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="*" element={<Login />} />
       </Route>
       <Route path="*" element={<Index />} />
-      <Route path="/product/:id" element={<Product />} />
-      <Route path="/cart" element={<Cart />} />
     </Routes>
   );
 }
 
 const ProtectedRoute = ({ children }) => {
-  const token = userStore((state) => state.token);
-  const isAuthenticated = token;
+  const { user, token: isAuthenticated } = userStore(
+    (state) => ({
+      user: state.user,
+      token: state.token,
+    }),
+    shallow
+  );
+  const adminRole = user && user.isAdmin ? true : false;
 
   if (!isAuthenticated) {
-    // return <Navigate to="products" replace />;
+    return <Navigate to="/auth/login" replace />;
+  }
+  if (isAuthenticated && !adminRole) {
+    return <Page404 to="/" replace />;
   }
   return children;
 };

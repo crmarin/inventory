@@ -9,10 +9,14 @@ export default function Login() {
   const {
     login,
     error,
+    setError,
+    clearError,
     token: isAuthenticated,
   } = userStore(
     (state) => ({
       login: state.login,
+      clearError: state.clearError,
+      setError: state.setError,
       error: state.error,
       token: state.token,
     }),
@@ -31,12 +35,20 @@ export default function Login() {
   };
 
   if (isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to="/companies" />;
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    clearError();
 
+    if (password === '') {
+      setError('password', 'Ingrese contraseña');
+    }
+    if (email === '') {
+      setError('email', 'Ingrese email');
+    }
+    if (password === '' || email === '') return;
     login(formData);
   };
   return (
@@ -69,6 +81,11 @@ export default function Login() {
                       value={email}
                       onChange={handleChange}
                     />
+                    {error && error.email && (
+                      <span className="mr-2 text-xs text-red-500">
+                        <i className="fas fa-bell"></i> {error.email}
+                      </span>
+                    )}
                   </div>
 
                   <div className="relative mb-3 w-full">
@@ -85,9 +102,9 @@ export default function Login() {
                       value={password}
                       onChange={handleChange}
                     />
-                    {error && error.msg && (
+                    {error && error.password && (
                       <span className="mr-2 text-xs text-red-500">
-                        <i className="fas fa-bell"></i> {error.msg}
+                        <i className="fas fa-bell"></i> {error.password}
                       </span>
                     )}
                   </div>

@@ -6,6 +6,18 @@ let store = (set, get) => ({
   token: localStorage.getItem('token'),
   user: null,
   error: null,
+  clearError: () => {
+    set({ error: null }, false, {
+      type: 'clearError',
+    });
+  },
+  setError: (param, message) => {
+    const currenError = get().error;
+    const auxError = { ...currenError, [param]: message };
+    set({ error: auxError }, false, {
+      type: 'setError',
+    });
+  },
   register: async (formData) => {
     try {
       const { data: token } = await api.post('users', formData);
@@ -17,7 +29,8 @@ let store = (set, get) => ({
       localStorage.setItem('token', token.token);
       get().loadUser();
     } catch (err) {
-      set({ error: err.response.data[0] }, false, {
+      const { param, msg } = err.response.data[0];
+      set({ error: { [param]: msg } }, false, {
         type: 'login-fail',
       });
     }
@@ -33,7 +46,8 @@ let store = (set, get) => ({
       localStorage.setItem('token', token.token);
       get().loadUser();
     } catch (err) {
-      set({ error: err.response.data[0] }, false, {
+      const { param, msg } = err.response.data[0];
+      set({ error: { [param]: msg } }, false, {
         type: 'login-fail',
       });
     }
@@ -54,7 +68,6 @@ let store = (set, get) => ({
     set({ token: null }, false, { type: 'logout' });
     delete api.defaults.headers.common['x-auth-token'];
     localStorage.removeItem('token');
-    localStorage.removeItem('cart');
     document.location.href = '/';
   },
 });

@@ -44,20 +44,12 @@ AuthController.login = async (req, res) => {
       res.json({ token });
     }
   );
-  // res.json({
-  //   _id: user._id,
-  //   name: user.name,
-  //   email: user.email,
-  //   isAdmin: user.isAdmin,
-  //   token: generateToken(user._id),
-  // })
 };
 
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
 AuthController.current = async (req, res) => {
-
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -68,8 +60,7 @@ AuthController.current = async (req, res) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    res.status(404);
-    throw new Error('User not found');
+    res.status(404).json('User not found');
   }
 };
 

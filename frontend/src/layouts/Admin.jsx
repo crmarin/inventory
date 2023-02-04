@@ -6,7 +6,7 @@ export default function Admin() {
     <>
       <div>
         {/* Header */}
-        <div className="h-full mx-auto w-full px-4 md:px-2">
+        <div className="h-full m-auto w-full px-4 md:px-2 bg-gray-50">
           <Outlet />
         </div>
       </div>

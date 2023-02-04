@@ -73,6 +73,11 @@ export default function Register() {
                       value={name}
                       onChange={handleChange}
                     />
+                    {error && error.name && (
+                      <span className="mr-2 text-xs text-red-500">
+                        <i className="fas fa-bell"></i> {error.name}
+                      </span>
+                    )}
                   </div>
                   <div className="relative mb-3 w-full">
                     <label
@@ -88,6 +93,11 @@ export default function Register() {
                       value={email}
                       onChange={handleChange}
                     />
+                    {error && error.email && (
+                      <span className="mr-2 text-xs text-red-500">
+                        <i className="fas fa-bell"></i> {error.email}
+                      </span>
+                    )}
                   </div>
 
                   <div className="relative mb-3 w-full">
@@ -104,9 +114,9 @@ export default function Register() {
                       value={password}
                       onChange={handleChange}
                     />
-                    {error && error.msg && (
+                    {error && error.password && (
                       <span className="mr-2 text-xs text-red-500">
-                        <i className="fas fa-bell"></i> {error.msg}
+                        <i className="fas fa-bell"></i> {error.password}
                       </span>
                     )}
                   </div>
@@ -126,6 +136,11 @@ export default function Register() {
                         Es Admin
                       </span>
                     </label>
+                    {error && error.isAdmin && (
+                      <span className="mr-2 text-xs text-red-500">
+                        <i className="fas fa-bell"></i> {error.isAdmin}
+                      </span>
+                    )}
                   </div>
 
                   <div className="mt-6 text-center">
