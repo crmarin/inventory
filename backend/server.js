@@ -5,17 +5,19 @@ import dotenv from 'dotenv';
 
 import connectDB from './config/db.js';
 import routes from './routes/api/index.js';
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
-
 app.use(cors());
 
 // Init Middleware
 app.use(express.json());
+
+app.use(fileUpload());
 
 // Define Routes
 app.use('/', routes);

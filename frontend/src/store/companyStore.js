@@ -5,6 +5,7 @@ import api from '../utils/api';
 let store = (set, get) => ({
   companies: [],
   company: null,
+  file: null,
   status: null,
   statusModal: false,
   error: null,
@@ -91,6 +92,24 @@ let store = (set, get) => ({
     } catch (err) {
       set({ error: err.response.data }, false, {
         type: 'deleteCompany-fail',
+      });
+    }
+  },
+  uploadFile: async (formData) => {
+    try {
+      let data = await api.post('companies/upload_file', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(data);
+      
+
+      get().clearError();
+    } catch (err) {
+      set({ error: err.response.data }, false, {
+        type: 'uploadFile-fail',
       });
     }
   },

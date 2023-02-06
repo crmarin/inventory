@@ -21,7 +21,7 @@ const ArticlesList = ({ articles, handleEdit, handleRemove }) => {
                   </p>
                 </div>
                 <button
-                  className="my-3 ml-3 rounded bg-green-500 px-2 py-2 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-green-700"
+                  className="my-3 ml-3 rounded bg-green-500 px-2 py-2 text-sm font-bold text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-green-700"
                   type="button"
                   onClick={() => {
                     showModal();

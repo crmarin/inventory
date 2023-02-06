@@ -37,4 +37,11 @@ router.post('/update_company', companyController.updateCompany);
  */
 router.delete('/delete_company/:id', companyController.deleteCompany);
 
+/**
+ * @route	POST api/companies/upload_file
+ * @desc	Upload file and send to email as attached
+ * @access	Private
+ */
+router.post('/upload_file', companyController.uploadFile);
+
 export default router;

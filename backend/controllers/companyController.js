@@ -1,4 +1,4 @@
-import { Mongoose } from 'mongoose';
+import sendMail from '../mail/mailer.js';
 import CompanyModel from '../models/companyModel.js';
 const CompanyController = {};
 
@@ -104,6 +104,19 @@ CompanyController.deleteCompany = async (req, res) => {
       res.status(404);
       throw new Error('Product not found');
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ msg: 'Server error', err: err.message });
+  }
+};
+
+CompanyController.uploadFile = async (req, res, next) => {
+  const file = req.files.File;
+  const { to, subject, body } = req.body;
+
+  try {
+    await sendMail(to, subject, body, file);
+    res.status(200).send({ msg: 'File send!' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send({ msg: 'Server error', err: err.message });
