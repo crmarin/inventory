@@ -60,7 +60,7 @@ export default function Login() {
               <div className="mb-0 rounded-t px-6 py-6">
                 <div className="mb-3 text-center">
                   <h6 className="text-sm font-bold text-gray-500">
-                    Iniciar Sesión
+                    Log in
                   </h6>
                 </div>
                 <hr className="border-b-1 mt-6 border-gray-300" />
@@ -114,14 +114,14 @@ export default function Login() {
                       className="mr-1 mb-1 rounded bg-gray-800 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-gray-600"
                       type="submit"
                     >
-                      Ingresar
+                      Ingress
                     </button>
                   </div>
                   <div className="mt-6 relative">
                     <div className="text-center">
                       <Link to="/auth/register">
-                        Si no tienes cuenta{' '}
-                        <span className="text-blue-500 mr-2">Registrate</span>
+                        If you doesn't have account{' '}
+                        <span className="text-blue-500 mr-2">Register</span>
                       </Link>
                     </div>
                   </div>

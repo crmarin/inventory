@@ -52,7 +52,7 @@ export default function Register() {
               <div className="mb-0 rounded-t px-6 py-6">
                 <div className="mb-3 text-center">
                   <h6 className="text-sm font-bold text-gray-500">
-                    Registro de cuenta
+                    Register account
                   </h6>
                 </div>
                 <hr className="border-b-1 mt-6 border-gray-300" />
@@ -133,7 +133,7 @@ export default function Register() {
                         className="form-checkbox ml-1 h-5 w-5 rounded border-0 text-gray-700 transition-all duration-150 ease-linear"
                       />
                       <span className="ml-2 text-xs font-semibold capitalize text-gray-600">
-                        Es Admin
+                        Is Admin
                       </span>
                     </label>
                     {error && error.isAdmin && (
@@ -148,14 +148,14 @@ export default function Register() {
                       className="mr-1 mb-1 rounded bg-gray-800 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-gray-600"
                       type="submit"
                     >
-                      Crear cuenta
+                      Create account
                     </button>
                   </div>
                   <div className="mt-6 relative">
                     <div className="text-center">
                       <Link to="/auth/login">
-                        Si ya tienes cuenta{' '}
-                        <span className="text-blue-500 mr-2">Ingresa</span>
+                        If already have account{' '}
+                        <span className="text-blue-500 mr-2">Log in</span>
                       </Link>
                     </div>
                   </div>

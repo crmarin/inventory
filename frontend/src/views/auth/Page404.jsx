@@ -16,11 +16,10 @@ export default function Page404() {
                 404
               </h1>
               <h4 className="mb-2 mt-0 text-3xl font-bold">
-                No tiene permisos para acceder a esta ruta :(
+                You doesn't have permission to access here :(
               </h4>
               <p className="text-2xl font-normal leading-normal text-gray-500">
-                Ooooups! Puede contactarse con el administrador o servicio
-                técnico.
+                Ooooups! Puede could you connect with the admin site.
               </p>
             </div>
           </div>

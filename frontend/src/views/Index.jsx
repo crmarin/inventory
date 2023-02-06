@@ -36,6 +36,20 @@ export default function Index() {
                 the CSS from . It features multiple HTML elements and it comes
                 with dynamic components for ReactJS, Vue and Angular.
               </p>
+              <div>
+                <p className="mt-6 text-lg leading-relaxed text-gray-500">
+                  Admin user:{' '}
+                </p>
+                <p>admin@test.com</p>
+              </div>
+              <div>
+                <p className="mt-2 text-lg leading-relaxed text-gray-500">
+                  Normal user:{' '}
+                </p>
+                <p>user@test.com</p>
+                <p className="text-lg leading-relaxed text-gray-500">Passwords:</p>
+                <p>123</p>
+              </div>
               {!isAuthenticated && (
                 <div className="mt-12">
                   <Link

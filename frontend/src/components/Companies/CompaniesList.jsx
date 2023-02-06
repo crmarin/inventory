@@ -95,11 +95,11 @@ const CompaniesList = ({
   return (
     <div className="-m-24 mx-auto lg:w-9/12 w-full lg:px-10 px-0 min-h-full">
       <div className="mt-20 flex flex-wrap">
-        <div className="mb-12 w-full px-4">
+        <div className="mb-6 w-full px-4">
           <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
             <div className="mb-0 rounded-t border-0 px-4 py-3">
               {user && user?.isAdmin && (
-                <div className="flex flex-wrap items-center rounded bg-white shadow-lg border-2 py-5">
+                <div className="flex flex-wrap items-center">
                   <div className="relative w-full max-w-full flex-1 flex-grow px-4">
                     <h3 className="text-gray-700 text-lg font-semibold my-5 mx-2">
                       Send file
@@ -108,7 +108,7 @@ const CompaniesList = ({
                   <div className="flex-auto px-4 py-10 pt-0 lg:px-10 mb-0 rounded-t border-0">
                     <form onSubmit={handleUploadFile}>
                       <div className="flex flex-wrap">
-                        <div className="w-full px-4 lg:w-6/12 xl:w-6/12">
+                        <div className="w-full px-4 lg:w-6/12 xl:w-2/12">
                           <div className="relative mb-3 w-full">
                             <label
                               className="mb-2 block text-xs font-bold uppercase text-gray-600"
@@ -130,7 +130,7 @@ const CompaniesList = ({
                             </span>
                           )}
                         </div>
-                        <div className="w-full px-4 lg:w-6/12 xl:w-6/12">
+                        <div className="w-full px-4 lg:w-6/12 xl:w-3/12">
                           <div className="relative mb-3 w-full">
                             <label
                               className="mb-2 block text-xs font-bold uppercase text-gray-600"
@@ -152,7 +152,7 @@ const CompaniesList = ({
                             </span>
                           )}
                         </div>
-                        <div className="w-full px-4 lg:w-6/12 xl:w-6/12">
+                        <div className="w-full px-4 lg:w-6/12 xl:w-3/12">
                           <div className="relative mb-3 w-full">
                             <label
                               className="mb-2 block text-xs font-bold uppercase text-gray-600"
@@ -174,8 +174,8 @@ const CompaniesList = ({
                             </span>
                           )}
                         </div>
-                        <div className="w-full px-4 lg:w-6/12 xl:w-6/12">
-                          <div className="relative mt-5 mb-3 w-full">
+                        <div className="w-full px-4 lg:w-6/12 xl:w-2/12">
+                          <div className="relative mt-4 mb-3 w-full">
                             <input
                               className="my-3 ml-3 rounded bg-blue-500 px-2 py-2 text-sm text-gray-800 transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-700"
                               type="file"
@@ -189,18 +189,30 @@ const CompaniesList = ({
                             </span>
                           )}
                         </div>
-                        <button
-                          className="my-3 ml-3 rounded bg-green-500 px-2 py-2 text-sm font-bold text-gray-100 shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-green-700"
-                          type="summit"
-                        >
-                          <i className="fas fa-upload text-red-800"></i> Send
-                          file
-                        </button>
+                        <div className="w-full px-4 lg:w-6/12 xl:w-2/12">
+                          <div className="relative mt-4 mb-3 w-full">
+                            <button
+                              className="my-3 ml-3 rounded bg-blue-500 px-2 py-2 text-sm font-bold text-gray-100 shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-blue-700"
+                              type="summit"
+                            >
+                              <i className="fas fa-upload text-gray-800"></i>{' '}
+                              Send file
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-5 flex flex-wrap">
+        <div className="mb-12 w-full px-4">
+          <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
+            <div className="mb-0 rounded-t border-0 px-4 py-3">
               <div className="flex flex-wrap items-center">
                 <div className="relative w-full max-w-full flex-1 flex-grow px-4">
                   <h3 className="text-gray-700 text-lg font-semibold">
@@ -223,7 +235,7 @@ const CompaniesList = ({
                       type="button"
                       onClick={generatePDF}
                     >
-                      <i className="fas fa-download text-blue-800"></i> Download
+                      <i className="fas fa-download text-gray-800"></i> Download
                     </button>
                   </div>
                 )}
