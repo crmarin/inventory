@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { companyStore } from '@/store/companyStore';
 import { shallow } from 'zustand/shallow';
@@ -29,7 +29,11 @@ export default () => {
     shallow
   );
 
+  const isRunned = useRef(false);
+
   useEffect(() => {
+    if (isRunned.current) return;
+    isRunned.current = true;
     getAllCompanies();
   }, []);
 

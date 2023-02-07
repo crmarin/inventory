@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 
 import { articleStore } from '@/store/articleStore';
@@ -39,8 +39,12 @@ export default () => {
     shallow
   );
 
+  const isRunned = useRef(false);
+
   useEffect(() => {
     if (id) {
+      if (isRunned.current) return;
+      isRunned.current = true;
       getCompanyById(id);
       getAllArticlesByCompany(id);
     }

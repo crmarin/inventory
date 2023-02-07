@@ -14,10 +14,8 @@ function Articles() {
   let { id } = useParams();
 
   const {
-    getCompanyById,
     company,
     articles,
-    getAllArticlesByCompany,
     statusModal,
     setError,
     createArticle,
@@ -83,13 +81,6 @@ function Articles() {
   const clearFormData = () => {
     setFormData(initialState);
   };
-
-  useEffect(() => {
-    if (id) {
-      getCompanyById(id);
-      getAllArticlesByCompany(id);
-    }
-  }, [id]);
 
   return (
     <div className="h-screen">
