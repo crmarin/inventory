@@ -6,21 +6,16 @@ import Footer from '@/components/Footers/Footer';
 import ArticlesForm from '@/components/Articles/ArticlesForm';
 import ArticlesList from '@/components/Articles/ArticlesList';
 
-import { companyStore } from '@/store/companyStore';
-import { articleStore } from '@/store/articleStore';
-import { shallow } from 'zustand/shallow';
+
 import { useParams } from 'react-router';
+import useArticles from '../../hooks/useArticles';
 
 function Articles() {
-  const { getCompanyById, company } = companyStore(
-    (state) => ({
-      getCompanyById: state.getCompanyById,
-      company: state.company,
-    }),
-    shallow
-  );
+  let { id } = useParams();
 
   const {
+    getCompanyById,
+    company,
     articles,
     getAllArticlesByCompany,
     statusModal,
@@ -28,22 +23,8 @@ function Articles() {
     createArticle,
     updateArticle,
     deleteArticle,
-    status: success,
-  } = articleStore(
-    (state) => ({
-      articles: state.articles,
-      getAllArticlesByCompany: state.getAllArticlesByCompany,
-      statusModal: state.statusModal,
-      setError: state.setError,
-      createArticle: state.createArticle,
-      updateArticle: state.updateArticle,
-      deleteArticle: state.deleteArticle,
-      status: state.status,
-    }),
-    shallow
-  );
-
-  let { id } = useParams();
+    success,
+  } = useArticles();
 
   const initialState = {
     _id: null,

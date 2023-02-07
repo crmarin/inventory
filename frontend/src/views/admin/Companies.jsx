@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import IndexNavbar from '@/components/Navbars/IndexNavbar';
 import Footer from '@/components/Footers/Footer';
 import CompaniesForm from '@/components/Companies/CompaniesForm';
+import CompaniesUpload from '@/components/Companies/CompaniesUpload';
 import CompaniesList from '@/components/Companies/CompaniesList';
 
-import { companyStore } from '@/store/companyStore';
-import { shallow } from 'zustand/shallow';
+import useCompanies from '../../hooks/useCompanies';
 
 function Companies() {
   const {
-    getAllCompanies,
     companies,
     statusModal,
     setError,
@@ -18,21 +17,8 @@ function Companies() {
     updateCompany,
     deleteCompany,
     getCompanyById,
-    status: success,
-  } = companyStore(
-    (state) => ({
-      statusModal: state.statusModal,
-      companies: state.companies,
-      getAllCompanies: state.getAllCompanies,
-      setError: state.setError,
-      createCompany: state.createCompany,
-      updateCompany: state.updateCompany,
-      deleteCompany: state.deleteCompany,
-      getCompanyById: state.getCompanyById,
-      status: state.status,
-    }),
-    shallow
-  );
+    success
+  } = useCompanies();
 
   const initialState = {
     _id: null,
@@ -56,6 +42,10 @@ function Companies() {
 
   const onSelectCompany = (id) => {
     getCompanyById(id);
+  };
+
+  const clearFormData = () => {
+    setFormData(initialState);
   };
 
   const onSubmit = () => {
@@ -82,18 +72,9 @@ function Companies() {
     }
   }, [success]);
 
-  const clearFormData = () => {
-    setFormData(initialState);
-  };
-
-  useEffect(() => {
-    getAllCompanies();
-  }, []);
-
   return (
     <div className="h-screen">
       <IndexNavbar fixed />
-
       <div className="relative pt-16 pb-16 flex content-center items-center justify-center min-h-screen-75">
         <div
           className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
@@ -101,21 +82,24 @@ function Companies() {
         ></div>
       </div>
 
-      {statusModal && (
-        <CompaniesForm
-          handleSubmit={onSubmit}
-          formData={formData}
-          setFormData={setFormData}
-          clearFormData={clearFormData}
-        />
-      )}
+      <div className="mt-12 mx-auto lg:w-9/12 w-full lg:px-10 px-0 min-h-full">
+        <CompaniesUpload />
 
-      <CompaniesList
-        companies={companies}
-        handleEdit={onUpdateCompany}
-        handleRemove={onDeleteCompany}
-        handleCompany={onSelectCompany}
-      />
+        {statusModal && (
+          <CompaniesForm
+            handleSubmit={onSubmit}
+            formData={formData}
+            setFormData={setFormData}
+            clearFormData={clearFormData}
+          />
+        )}
+        <CompaniesList
+          companies={companies}
+          handleEdit={onUpdateCompany}
+          handleRemove={onDeleteCompany}
+          handleCompany={onSelectCompany}
+        />
+      </div>
 
       <Footer />
     </div>
