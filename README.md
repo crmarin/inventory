@@ -2,6 +2,9 @@
 System to save companies and articles by company
 Download table as pdf and send file as email using SES AWS service
 
+visit - develop mode
+http://44.206.166.53/
+
 ## Installation & Setup for Development
 1. Go to /backend and /frontend folder
 2. install dependences - **npm install --save** in each folder
